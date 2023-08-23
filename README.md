@@ -25,6 +25,9 @@
 - Database : MySql(8.0 / JPA), Redis
 - Tools : IntelliJ, Docker, AWS
 
+# ERD
+![ERD](https://github.com/HyomYom/kokio-web-order-system/file/read/KOKIO_ERD.png)
+
 # 기능 구현
 
 ## 공통
