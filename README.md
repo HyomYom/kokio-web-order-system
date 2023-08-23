@@ -26,7 +26,7 @@
 - Tools : IntelliJ, Docker, AWS
 
 # ERD
-![ERD](https://github.com/HyomYom/kokio-web-order-system/file/read/KOKIO_ERD.png)
+![ERD](https://github.com/HyomYom/kokio-web-order-system/raw/main/file/read/KOKIO_ERD.png)
 
 # 기능 구현
 
