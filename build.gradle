@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.14'
+    id 'org.springframework.boot' version '2.7.15'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -39,13 +39,20 @@ subprojects {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
+        // Feign
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
         // sql
         runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
         //jwt
         implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
-        implementation 'org.springframework.boot:spring-boot-starter'
+        //RandomStringUtils
+        implementation 'org.apache.commons:commons-lang3:3.12.0' // 최신 버전 확인하여 업데이트 가능
+
+
+        implementation 'io.springfox:springfox-boot-starter:3.0.0'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.springframework.security:spring-security-test'
     }
@@ -71,8 +78,21 @@ subprojects {
 }
 
 project(':user-api') { // 컴파일 시 multi-module-database 로딩
-    bootJar { enabled = false }
+    bootJar { enabled = true }
     jar { enabled = true }
     dependencies {
+        implementation project(':token-provider')
     }
+}
+project(':product-register-api') { // 컴파일 시 multi-module-database 로딩
+    bootJar { enabled = true }
+    jar { enabled = true }
+    dependencies {
+        implementation project(':token-provider')
+    }
+}
+
+project(':token-provider') { // multi-module-databse는 bootJar로 패키징 할 필요 없음
+    bootJar { enabled = false }
+    jar { enabled = true }
 }
