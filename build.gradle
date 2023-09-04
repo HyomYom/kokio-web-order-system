@@ -34,10 +34,12 @@ subprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.hibernate:hibernate-core:5.5.6.Final'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-security'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+
 
         // Feign
         implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
@@ -45,16 +47,27 @@ subprojects {
         // sql
         runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
+        // H2
+        testImplementation 'com.h2database:h2:1.4.200'
+
         //jwt
         implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
         //RandomStringUtils
         implementation 'org.apache.commons:commons-lang3:3.12.0' // 최신 버전 확인하여 업데이트 가능
 
+        //deserialized
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.5'
 
+//swagger
         implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+        //junit
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.0'
+
         testImplementation 'org.springframework.security:spring-security-test'
+        testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     }
 
     tasks.named('test') {
@@ -78,21 +91,25 @@ subprojects {
 }
 
 project(':user-api') { // 컴파일 시 multi-module-database 로딩
-    bootJar { enabled = true }
     jar { enabled = true }
     dependencies {
-        implementation project(':token-provider')
-    }
-}
-project(':product-register-api') { // 컴파일 시 multi-module-database 로딩
-    bootJar { enabled = true }
-    jar { enabled = true }
-    dependencies {
-        implementation project(':token-provider')
+        implementation project(':common-module')
+        implementation project(':entity-module')
     }
 }
 
-project(':token-provider') { // multi-module-databse는 bootJar로 패키징 할 필요 없음
-    bootJar { enabled = false }
+project(':product-api') { // 컴파일 시 multi-module-database 로딩
+    jar { enabled = true }
+    dependencies {
+        implementation project(':common-module')
+        implementation project(':entity-module')
+    }
+}
+
+project(':common-module') { // multi-module-databse는 bootJar로 패키징 할 필요 없음
+    jar { enabled = true }
+}
+
+project(':entity-module') { // multi-module-databse는 bootJar로 패키징 할 필요 없음
     jar { enabled = true }
 }

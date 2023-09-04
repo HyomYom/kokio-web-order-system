@@ -1,14 +1,12 @@
 package com.kokio.userapi.service.author;
 
-import static com.kokio.userapi.exception.ErrorCode.ALREADY_VERIFY;
-import static com.kokio.userapi.exception.ErrorCode.USER_NOT_FOUND;
-import static com.kokio.userapi.exception.ErrorCode.VERIFICATION_PERIOD_HAS_EXPIRED;
-import static com.kokio.userapi.exception.ErrorCode.WRONG_VERIFICATION_CODE;
 
-import com.kokio.userapi.domain.entity.User;
-import com.kokio.userapi.domain.model.Sign;
-import com.kokio.userapi.domain.repository.UserRepository;
-import com.kokio.userapi.exception.CustomException;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.USER_NOT_FOUND;
+
+import com.kokio.commonmodule.exception.UserException;
+import com.kokio.entitymodule.domain.user.entity.User;
+import com.kokio.entitymodule.domain.user.model.Sign;
+import com.kokio.entitymodule.domain.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -24,8 +22,6 @@ public class AuthorSignUpService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-
-
 
 
   @Transactional
@@ -52,23 +48,14 @@ public class AuthorSignUpService {
       return user.getVerifyExpiredAt().toLocalDate();
     }
 
-    throw new CustomException(USER_NOT_FOUND);
+    throw new UserException(USER_NOT_FOUND);
   }
 
 
   @Transactional
-  public void userVerify(String email, String verifyCode) {
-    User user = userRepository.findByEmail(email).orElseThrow(
-        () -> new CustomException(USER_NOT_FOUND)
-    );
-    if (user.isVerify()) {
-      throw new CustomException(ALREADY_VERIFY);
-    } else if (!user.getVerificationCode().equals(verifyCode)) {
-      throw new CustomException(WRONG_VERIFICATION_CODE);
-    } else if (user.getVerifyExpiredAt().isBefore(LocalDateTime.now())) {
-      throw new CustomException(VERIFICATION_PERIOD_HAS_EXPIRED);
-    }
-    user.setVerify(true);
+  public Optional<User> userVerify(String email, String verifyCode) {
+    return userRepository.findByEmail(email);
+
   }
 
   public String getRandomCode() {

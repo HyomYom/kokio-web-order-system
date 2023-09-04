@@ -1,0 +1,35 @@
+###물건등록
+POST http://localhost:8082/seller/addProduct
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzODQ4MDk5LCJleHAiOjE2OTM4NTE2OTl9.s1FCE4FTiiDhFKTJkArua71qwsYZiew0oFyCsfOm-Ac
+
+{
+  "count": 10,
+  "description": "너무좋아요",
+  "items": [
+  ],
+  "name": "갤럭시패드",
+  "price": 100000,
+  "sellerId": 1
+}
+
+
+###세부물건등록
+POST http://localhost:8082/seller/addItem
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzODQ4MDk5LCJleHAiOjE2OTM4NTE2OTl9.s1FCE4FTiiDhFKTJkArua71qwsYZiew0oFyCsfOm-Ac
+
+[
+  {
+    "count": 10,
+    "name": "가스",
+    "price": 10000,
+    "productId": 1
+  },
+  {
+    "count": 10,
+    "name": "k9",
+    "price": 100,
+    "productId": 1
+  }
+]

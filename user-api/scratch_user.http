@@ -1,4 +1,23 @@
-###로그인
+###회원가입
+POST http://localhost:8081/auth/register
+Content-Type: application/json
+
+{
+  "birth": "2023-08-29",
+  "email": "pagooo@naver.com",
+  "firstname": "string",
+  "lastName": "string",
+  "password": "string",
+  "phone": "string",
+  "roles": [
+    "ROLE_CUSTOMER"
+  ]
+}
+
+
+
+
+###로그인/hyo
 POST http://localhost:8081/auth/login
 Content-Type: application/json
 
@@ -7,8 +26,26 @@ Content-Type: application/json
   "password": "string"
 }
 
+###로그인/pago
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+
+{
+  "email": "pagooo@naver.com",
+  "password": "string"
+}
+
 
 ###유저 정보
 GET http://localhost:8081/auth/getInfo
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiJdLCJpYXQiOjE2OTI5ODk2NjYsImV4cCI6MTY5Mjk5MzI2Nn0.I0TwGB-ddh4H5bjXDfi5hPqsLIbKWvUEBXa0cwjYGrk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzODQ3NzU2LCJleHAiOjE2OTM4NTEzNTZ9.2DPTilQWnEdFIntdU5XkY5CsPvab1AviWpu7uidzD08
+
+
+###유저 정보 for Module
+GET http://localhost:8081/auth/getInfo/module
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzODQ3NzU2LCJleHAiOjE2OTM4NTEzNTZ9.2DPTilQWnEdFIntdU5XkY5CsPvab1AviWpu7uidzD08
+
+//eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzNDY0ODMxLCJleHAiOjE2OTM0Njg0MzF9.uKHFA9kmzUlFsRBWpLVfdhMZ4ZsX0Y8c3XjxANINAwM
+
