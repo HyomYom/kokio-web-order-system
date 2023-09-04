@@ -1,0 +1,14 @@
+###로그인
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+
+{
+  "email": "hyomyang@gmail.com",
+  "password": "string"
+}
+
+
+###유저 정보
+GET http://localhost:8081/auth/getInfo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiJdLCJpYXQiOjE2OTI5ODk2NjYsImV4cCI6MTY5Mjk5MzI2Nn0.I0TwGB-ddh4H5bjXDfi5hPqsLIbKWvUEBXa0cwjYGrk
