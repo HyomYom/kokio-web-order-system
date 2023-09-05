@@ -1,6 +1,6 @@
 package com.kokio.userapi.config;
 
-import com.kokio.tokenprovider.security.TokenProvider;
+import com.kokio.commonmodule.security.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

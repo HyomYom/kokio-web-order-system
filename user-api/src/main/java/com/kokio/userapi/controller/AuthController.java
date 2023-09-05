@@ -1,14 +1,16 @@
 package com.kokio.userapi.controller;
 
 
-import static com.kokio.userapi.exception.ErrorCode.USER_NOT_FOUND;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.USER_NOT_FOUND;
 
-import com.kokio.tokenprovider.security.TokenProvider;
-import com.kokio.tokenprovider.security.common.UserVo;
+import com.kokio.commonmodule.exception.UserException;
+import com.kokio.commonmodule.security.TokenProvider;
+import com.kokio.commonmodule.security.common.UserVo;
+import com.kokio.entitymodule.domain.user.entity.User;
+import com.kokio.entitymodule.domain.user.model.Sign;
+import com.kokio.entitymodule.domain.user.model.UserDto;
 import com.kokio.userapi.application.SignInApplication;
 import com.kokio.userapi.application.SignUpApplication;
-import com.kokio.userapi.domain.model.Sign;
-import com.kokio.userapi.exception.CustomException;
 import com.kokio.userapi.service.author.AuthorGetUserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +33,11 @@ public class AuthController {
   private final SignInApplication signInApplication;
   private final AuthorGetUserInfoService authorGetUserInfoService;
   private final TokenProvider provider;
-  public static final String TOKEN_PREFIX = "Bearer ";
+  private static final String TOKEN_PREFIX = "Bearer ";
 
 
   @PostMapping("/register")
-  public ResponseEntity<String> userSignUp(@RequestBody Sign.Up form) {
+  public ResponseEntity<?> userSignUp(@RequestBody Sign.Up form) {
     return ResponseEntity.ok(signUpApplication.userSignUp(form));
 
   }
@@ -54,14 +56,26 @@ public class AuthController {
 
   @GetMapping("/getInfo")
   @PreAuthorize("hasRole('CUSTOMER')")
-  public ResponseEntity<UserDetails> getUserInfo(
-      @RequestHeader(name = "Authorization") String token) {
-    String retoken = token.substring(TOKEN_PREFIX.length());
-    UserVo userVo = provider.getUserVo(retoken);
+  public ResponseEntity<UserDto> getUserInfo(@RequestHeader(name = "Authorization") String token) {
+    if (token.startsWith(TOKEN_PREFIX)) {
+      token = token.substring(TOKEN_PREFIX.length());
+    }
+    UserVo userVo = provider.getUserVo(token);
     UserDetails userDetails = authorGetUserInfoService.getUserInfo(userVo.getId(),
-        userVo.getEmail()).orElseThrow(
-        () -> new CustomException(USER_NOT_FOUND)
-    );
-    return ResponseEntity.ok(userDetails);
+        userVo.getEmail()).orElseThrow(() -> new UserException(USER_NOT_FOUND));
+    return ResponseEntity.ok(UserDto.toDto((User) userDetails));
+  }
+
+  @GetMapping("/getInfo/module")
+  @PreAuthorize("hasRole('SELLER')")
+  public ResponseEntity<UserDto> getUserInfoForModule(
+      @RequestHeader(name = "Authorization") String token) {
+    if (token.startsWith(TOKEN_PREFIX)) {
+      token = token.substring(TOKEN_PREFIX.length());
+    }
+    UserVo userVo = provider.getUserVo(token);
+    User user = authorGetUserInfoService.getUserInfo(userVo.getId(),
+        userVo.getEmail()).orElseThrow(() -> new UserException(USER_NOT_FOUND));
+    return ResponseEntity.ok(UserDto.toDto(user));
   }
 }

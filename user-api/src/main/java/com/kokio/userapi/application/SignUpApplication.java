@@ -1,22 +1,28 @@
 package com.kokio.userapi.application;
 
 
-import static com.kokio.userapi.exception.ErrorCode.FAIL_TO_SEND_EMAIL;
-import static com.kokio.userapi.exception.ErrorCode.USER_ALREADY_EXIST;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.ALREADY_VERIFY;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.FAIL_TO_SEND_EMAIL;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.USER_ALREADY_EXIST;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.USER_NOT_FOUND;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.VERIFICATION_PERIOD_HAS_EXPIRED;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.WRONG_VERIFICATION_CODE;
 
+import com.kokio.commonmodule.exception.UserException;
+import com.kokio.entitymodule.domain.user.entity.User;
+import com.kokio.entitymodule.domain.user.model.Sign;
 import com.kokio.userapi.client.MailgunClient;
 import com.kokio.userapi.client.form.SendMailForm;
-import com.kokio.userapi.domain.entity.User;
-import com.kokio.userapi.domain.model.Sign;
-import com.kokio.userapi.exception.CustomException;
 import com.kokio.userapi.service.author.AuthorSignUpService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +38,7 @@ public class SignUpApplication {
 
   public String userSignUp(Sign.Up form) {
     if (authorSignUpService.checkExistEmail(form.getEmail())) {
-      throw new CustomException(USER_ALREADY_EXIST);
+      throw new UserException(USER_ALREADY_EXIST);
     }
     User register = authorSignUpService.register(form);
     String randomCode = authorSignUpService.getRandomCode();
@@ -47,8 +53,8 @@ public class SignUpApplication {
           .build());
 
       log.info("Send Email Result : " + verificationEmail);
-    } catch (Exception e) {
-      throw new CustomException(FAIL_TO_SEND_EMAIL);
+    } catch (UserException e) {
+      throw new UserException(FAIL_TO_SEND_EMAIL);
     }
 
     LocalDate expiredAt = authorSignUpService.setUserPermissionInfo(register.getId(),
@@ -57,9 +63,22 @@ public class SignUpApplication {
     return fullName + "님, 회원 가입에 성공하였습니다. \n" + String.valueOf(expiredAt) + " 이전까지 이메일 인증을 완료해주세요.";
   }
 
+  @Transactional
   public String userVerify(String email, String verifyCode) {
 
-    authorSignUpService.userVerify(email, verifyCode);
+    User user = authorSignUpService.userVerify(email, verifyCode).orElseThrow(
+        () -> new UserException(USER_NOT_FOUND)
+    );
+
+    if (user.isVerify()) {
+      throw new UserException(ALREADY_VERIFY);
+    } else if (!user.getVerificationCode().equals(verifyCode)) {
+      throw new UserException(WRONG_VERIFICATION_CODE);
+    } else if (user.getVerifyExpiredAt().isBefore(LocalDateTime.now())) {
+      throw new UserException(VERIFICATION_PERIOD_HAS_EXPIRED);
+    }
+    user.setVerify(true);
+
     return "인증에 성공하였습니다.";
   }
 

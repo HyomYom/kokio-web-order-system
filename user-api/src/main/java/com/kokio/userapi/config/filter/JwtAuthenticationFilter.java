@@ -1,8 +1,12 @@
 package com.kokio.userapi.config.filter;
 
 
-import com.kokio.tokenprovider.security.TokenProvider;
+import static com.kokio.commonmodule.exception.Code.UserErrorCode.JWT_TOKEN_EXPIRED;
+
+import com.kokio.commonmodule.exception.UserException;
+import com.kokio.commonmodule.security.TokenProvider;
 import com.kokio.userapi.application.SignInApplication;
+import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,13 +32,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws ServletException, IOException {
+      FilterChain filterChain) throws UserException, ServletException, IOException {
+    String requestUrl = request.getRequestURI();
 
-    String token = resolveTokenFromRequest(request);
+    try {
+      if (!requestUrl.equals("/auth/register") && !requestUrl.equals("/auth/login")
+          && !requestUrl.equals("/auth/register/verify")) {
 
-    if (!ObjectUtils.isEmpty(token) && provider.validateToken(token)) {
-      Authentication authentication = signInApplication.getAuthentication(token);
-      SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = resolveTokenFromRequest(request);
+
+        if (!ObjectUtils.isEmpty(token) && provider.validateToken(token)) {
+          Authentication authentication = signInApplication.getAuthentication(token);
+          SecurityContextHolder.getContext().setAuthentication(authentication);
+
+          filterChain.doFilter(request, response);
+          return;
+        }
+      }
+    } catch (ExpiredJwtException e) {
+      throw new UserException(JWT_TOKEN_EXPIRED);
     }
 
     filterChain.doFilter(request, response);

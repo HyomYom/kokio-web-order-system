@@ -37,4 +37,6 @@ out/
 .vscode/
 
 ### key ###
+user-api/src/test/resources/application-test.properties
 user-api/src/main/resources/application.properties
+product-api/src/main/resources/application.properties

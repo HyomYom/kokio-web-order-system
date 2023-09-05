@@ -1,4 +1,5 @@
 rootProject.name = 'service'
 include('user-api')
-include('product-register-api')
-include('token-provider')
+include('product-api')
+include('entity-module')
+include('common-module')
