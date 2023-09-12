@@ -35,4 +35,15 @@ public class ProductDto {
         .build();
   }
 
+  public static ProductDto toDtoWithOutItem(Product product) {
+    return ProductDto.builder()
+        .id(product.getId())
+        .seller_id(product.getSellerId())
+        .name(product.getName())
+        .description(product.getDescription())
+        .price(product.getPrice())
+        .count(product.getCount())
+        .build();
+  }
+
 }

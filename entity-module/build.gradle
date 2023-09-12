@@ -2,10 +2,15 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.15'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.kokio'
 version = '0.0.1-SNAPSHOT'
+
+ext {
+    set('queryDslVersion', "5.0.0")
+}
 
 java {
     sourceCompatibility = '11'
@@ -16,8 +21,44 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}" // 적절한 버전 사용
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}" // 적절한 버전 사용
+
+
+}
+
+def queryDslSrcDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+    main.java.srcDir queryDslSrcDir
+}
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = queryDslSrcDir
+}
+
+
+clean.doLast {
+    file(queryDslSrcDir).deleteDir()
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
 }
 
 tasks.named('test') {
