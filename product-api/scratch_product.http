@@ -1,14 +1,15 @@
 ###물건등록
 POST http://localhost:8082/seller/addProduct
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzODQ4MDk5LCJleHAiOjE2OTM4NTE2OTl9.s1FCE4FTiiDhFKTJkArua71qwsYZiew0oFyCsfOm-Ac
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0NTAzMjg5LCJleHAiOjE2OTQ1MDY4ODl9.zCX86iCviGtbPIkn-Z_y6ckGJXS9wew9mwOzv6njQAw
+
 
 {
   "count": 10,
   "description": "너무좋아요",
   "items": [
   ],
-  "name": "갤럭시패드",
+  "name": "애플커피",
   "price": 100000,
   "sellerId": 1
 }
@@ -17,7 +18,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQ
 ###세부물건등록
 POST http://localhost:8082/seller/addItem
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjkzODQ4MDk5LCJleHAiOjE2OTM4NTE2OTl9.s1FCE4FTiiDhFKTJkArua71qwsYZiew0oFyCsfOm-Ac
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0NTAzMjg5LCJleHAiOjE2OTQ1MDY4ODl9.zCX86iCviGtbPIkn-Z_y6ckGJXS9wew9mwOzv6njQAw
 
 [
   {
@@ -33,3 +34,49 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQ
     "productId": 1
   }
 ]
+
+###물건수정
+PUT http://localhost:8082/seller/update/product
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0MzMzODE3LCJleHAiOjE2OTQzMzc0MTd9.bPgIhovyBsqf12bbXMl-QjxhOCGGoljFOTDq60gjj4Q
+
+{
+  "count": 100,
+  "description": "스티븐잡스 짱",
+  "items": [
+  ],
+  "name": "갤럭시패드",
+  "price": 100,
+  "productId": 1
+}
+
+
+###세부물건 수정
+PUT http://localhost:8082/seller/update/item
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0MzMzODE3LCJleHAiOjE2OTQzMzc0MTd9.bPgIhovyBsqf12bbXMl-QjxhOCGGoljFOTDq60gjj4Q
+
+{
+  "count": 1000000,
+  "itemId": 2,
+  "name": "k2-Panzer",
+  "price": 100000
+}
+
+
+###상품 삭제
+DELETE http://localhost:8082/seller/delete/product?productId=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0NDUwNDAwLCJleHAiOjE2OTQ0NTQwMDB9.BykdU-WQ3ci-YVJDvD6CHW_0yxZSi6uBy7rzn_6x9Io
+
+
+###상세 상품 삭제
+DELETE http://localhost:8082/seller/delete/item?itemId=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0MzMzODE3LCJleHAiOjE2OTQzMzc0MTd9.bPgIhovyBsqf12bbXMl-QjxhOCGGoljFOTDq60gjj4Q
+
+###상품 검색
+GET http://localhost:8082/seller/search?name=커피&page=1&size=10&dir=ㅁsc&sort=name
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06emhJRkw0cy9OSWNkTWEySzZwMGJwaHZhTDdieG1PR0RGYlhLcnl3MlI2Zz0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06Z0k3MXNnYmRlZGlxOXBqbUVadTNyUT09Iiwicm9sZXMiOlsiUk9MRV9TRUxMRVIiXSwiaWF0IjoxNjk0NTAzMjg5LCJleHAiOjE2OTQ1MDY4ODl9.zCX86iCviGtbPIkn-Z_y6ckGJXS9wew9mwOzv6njQAw
+

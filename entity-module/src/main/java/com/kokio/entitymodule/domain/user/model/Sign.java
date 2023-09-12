@@ -4,6 +4,7 @@ import com.kokio.entitymodule.domain.user.entity.User;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Sign {
 
   @Data
+  @Builder
   @AllArgsConstructor
   @NoArgsConstructor
   public static class Up {

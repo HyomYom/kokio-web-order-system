@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductCustomRepository {
 
   @Override
   @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.LOAD)
@@ -15,6 +15,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
   @EntityGraph(attributePaths = {"items"}, type = EntityGraph.EntityGraphType.LOAD)
   Optional<Product> findByIdAndSellerId(Long id, Long sellerId);
+
+  void deleteById(Long productId);
 
   boolean existsBySellerIdAndName(Long sellerId, String name);
 }
