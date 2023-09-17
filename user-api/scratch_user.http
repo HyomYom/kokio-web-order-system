@@ -10,7 +10,7 @@ Content-Type: application/json
   "password": "string",
   "phone": "string",
   "roles": [
-    "ROLE_CUSTOMER"
+    "ROLE_CUSTOMER", "ROLE_SELLER"
   ]
 }
 

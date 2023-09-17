@@ -1,5 +1,6 @@
 package com.kokio.commonmodule.exception;
 
+import com.kokio.commonmodule.exception.Code.CartErrorCode;
 import com.kokio.commonmodule.exception.Code.ProductErrorCode;
 import com.kokio.commonmodule.exception.Code.UserErrorCode;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,13 @@ public class ExceptionController {
   public ResponseEntity<ExceptionResponse> productRequestException(final ProductException p) {
     return ResponseEntity.status(p.getStatus())
         .body(ExceptionResponse.fromProductErrorCode(p.getProductErrorCode()));
+  }
+
+  @ResponseBody
+  @ExceptionHandler({CartException.class})
+  public ResponseEntity<ExceptionResponse> cartRequestException(final CartException p) {
+    return ResponseEntity.status(p.getStatus())
+        .body(ExceptionResponse.fromCartErrorCode(p.getCartErrorCode()));
   }
 
   @ExceptionHandler(AccessDeniedException.class)
@@ -68,6 +76,15 @@ public class ExceptionController {
       response.status = errorCode.getHttpStatus().value();
       return response;
     }
+
+    public static ExceptionResponse fromCartErrorCode(CartErrorCode errorCode) {
+      ExceptionResponse response = new ExceptionResponse();
+      response.message = errorCode.getDetail();
+      response.errorCode = String.valueOf(errorCode);
+      response.status = errorCode.getHttpStatus().value();
+      return response;
+    }
+
 
   }
 }

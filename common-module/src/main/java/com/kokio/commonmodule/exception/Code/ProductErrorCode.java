@@ -28,7 +28,8 @@ public enum ProductErrorCode {
   TOKEN_AUTHENTICATION_TIMEOUT(HttpStatus.BAD_REQUEST, "토큰 유효 기간 만료"),
 
   //Redis
-  CART_ADD_FAIL(HttpStatus.BAD_REQUEST, "물품을 카트에 추가하지 못했습니다.");
+  CART_ADD_FAIL(HttpStatus.BAD_REQUEST, "물품을 카트에 추가하지 못했습니다."),
+  PRODUCT_ITEM_COUNT_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "수량이 부족하여 추구하지 못하였습니다.");
 
   private final HttpStatus httpStatus;
   private final String detail;
