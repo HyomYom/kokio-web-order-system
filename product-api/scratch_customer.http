@@ -3,11 +3,79 @@
 ###상품 검색
 GET http://localhost:8082/customer/product?name=커피&page=1&size=10&dir=asc&sort=name
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06TWU5cDJYd2sza3YzTENNL0NlOEthdz09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiJdLCJpYXQiOjE2OTQ1MDMzNTAsImV4cCI6MTY5NDUwNjk1MH0.ijlawOwck_3lWjZIspxw3PeWbCy8PJvzKkdJYeZzYOk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06bS9FcklIWnVzNmdBek1rOVNuaXBSQT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiIsIlJPTEVfU0VMTEVSIl0sImlhdCI6MTY5NDgwMDAzNiwiZXhwIjoxNjk0ODAzNjM2fQ.3FCIrmmvrHNq1viIlaIOCEJNy9QwtWczm11QCITG-Qc
+
 
 ###상세 상품 검색
 GET http://localhost:8082/customer/product/detail?productId=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06TWU5cDJYd2sza3YzTENNL0NlOEthdz09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiJdLCJpYXQiOjE2OTQ1MDMzNTAsImV4cCI6MTY5NDUwNjk1MH0.ijlawOwck_3lWjZIspxw3PeWbCy8PJvzKkdJYeZzYOk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06bS9FcklIWnVzNmdBek1rOVNuaXBSQT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiIsIlJPTEVfU0VMTEVSIl0sImlhdCI6MTY5NDgwMDAzNiwiZXhwIjoxNjk0ODAzNjM2fQ.3FCIrmmvrHNq1viIlaIOCEJNy9QwtWczm11QCITG-Qc
 
+
+###카트 담기
+POST http://localhost:8082/user/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06bS9FcklIWnVzNmdBek1rOVNuaXBSQT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiIsIlJPTEVfU0VMTEVSIl0sImlhdCI6MTY5NDk3MjQxOCwiZXhwIjoxNjk0OTc2MDE4fQ.Cs3hE3qxX1HvzXGyNzOQ0Sc94RYqK9OKDk3tcJm3NCY
+
+{
+  "count": 20,
+  "id": 1,
+  "items": [
+    {
+      "count": 10,
+      "name": "독",
+      "price": 100,
+      "id": 1
+    },
+    {
+      "count": 10,
+      "name": "k9",
+      "price": 100,
+      "id": 2
+    }
+  ],
+  "name": "애플커피",
+  "price": 100000,
+  "sellerId": 1
+}
+
+###카트 조회
+GET http://localhost:8082/user/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06bS9FcklIWnVzNmdBek1rOVNuaXBSQT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiIsIlJPTEVfU0VMTEVSIl0sImlhdCI6MTY5NDk3MjQxOCwiZXhwIjoxNjk0OTc2MDE4fQ.Cs3hE3qxX1HvzXGyNzOQ0Sc94RYqK9OKDk3tcJm3NCY
+
+###카트 업데이트
+PUT http://localhost:8082/user/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06NktsaGdkZUxhY0JNUUtYUzBQR1FIZGYxSzFkMVdFWjJQZWhwZFhLNi96TT0iLCJqdGkiOiJBQUFBQUFBQUFBQUFBQUFBQUFBQUFBPT06bS9FcklIWnVzNmdBek1rOVNuaXBSQT09Iiwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiIsIlJPTEVfU0VMTEVSIl0sImlhdCI6MTY5NDk3MjQxOCwiZXhwIjoxNjk0OTc2MDE4fQ.Cs3hE3qxX1HvzXGyNzOQ0Sc94RYqK9OKDk3tcJm3NCY
+
+{
+  "customerId": 4,
+  "products": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "name": "구글커피",
+      "price": 1000,
+      "count": 10,
+      "items": [
+        {
+          "id": 1,
+          "name": "가스",
+          "count": 10,
+          "price": 10000
+        },
+        {
+          "id": 2,
+          "name": "k9",
+          "count": 10,
+          "price": 100
+        }
+      ]
+    }
+  ],
+  "messages": [
+    "구글커피의 변동 사항 :\n애플커피의 상품명이 구글커피으로 변경되었습니다,\n구글커피의 가격이 변동되었습니다,\n구글커피의 수량이 부족하여 구매 가능한 최대치로 변경되었습니다"
+  ]
+}
 

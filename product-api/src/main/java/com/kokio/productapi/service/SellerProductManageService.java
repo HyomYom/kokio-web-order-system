@@ -55,7 +55,7 @@ public class SellerProductManageService {
 
   @Transactional
   public Product updateProduct(UserDto seller, ProductUpdateForm form) {
-    Product findProduct = productRepository.findByIdAndSellerId(seller.getId(), form.getProductId())
+    Product findProduct = productRepository.findByIdAndSellerId(form.getProductId(), seller.getId())
         .orElseThrow(
             () -> new ProductException(FAIL_FIND_PRODUCT)
         );
