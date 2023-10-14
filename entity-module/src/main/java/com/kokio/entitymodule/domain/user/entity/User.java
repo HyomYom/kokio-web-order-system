@@ -49,6 +49,7 @@ public class User implements UserDetails {
   private LocalDateTime verifyExpiredAt;
   private boolean verify;
   private String verificationCode;
+  private String refreshToekn;
 
 
   @Override

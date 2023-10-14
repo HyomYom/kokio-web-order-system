@@ -19,6 +19,7 @@ import com.kokio.entitymodule.domain.user.model.Sign.In;
 import com.kokio.entitymodule.domain.user.model.Sign.Up;
 import com.kokio.userapi.application.SignInApplication;
 import com.kokio.userapi.application.SignUpApplication;
+import com.kokio.userapi.model.security.Token;
 import com.kokio.userapi.service.author.AuthorGetUserInfoService;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +78,12 @@ public class AuthControllerTest {
   public void testUserSignIn() throws Exception {
 
     Sign.In in = signInForm();
-
-    when(signInApplication.userTokenLogin(any(Sign.In.class))).thenReturn("token");
+    Token token = signInApplication.userTokenLogin(in);
+    when(signInApplication.userTokenLogin(any(Sign.In.class))).thenReturn(token);
 
     mockMvc.perform(post("/auth/login").contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(in))).andExpect(status().isOk())
-        .andExpect(content().string("token"));
+        .content(objectMapper.writeValueAsString(in))).andExpect(status().isOk());
+
   }
 
   @Test

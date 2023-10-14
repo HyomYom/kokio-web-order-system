@@ -3,6 +3,7 @@ package com.kokio.productapi.config.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kokio.commonmodule.exception.Code.ProductErrorCode;
 import com.kokio.commonmodule.exception.Code.UserErrorCode;
+import com.kokio.commonmodule.exception.ProductException;
 import com.kokio.commonmodule.exception.UserException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -29,6 +30,12 @@ public class CustomFilterException extends OncePerRequestFilter {
     ObjectMapper objectMapper = new ObjectMapper();
     try {
       filterChain.doFilter(request, response);
+    } catch (ProductException e) {
+      response.setStatus(e.getStatus());
+      response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+      response.setCharacterEncoding("UTF-8");
+      objectMapper.writeValue(response.getWriter(),
+          ExceptionResponse.fromProductErrorCode(e.getProductErrorCode()));
     } catch (UserException e) {
       response.setStatus(e.getStatus());
       response.setContentType(MediaType.APPLICATION_JSON_VALUE);

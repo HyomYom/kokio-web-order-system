@@ -8,7 +8,8 @@ import com.kokio.commonmodule.exception.UserException;
 import com.kokio.commonmodule.security.TokenProvider;
 import com.kokio.commonmodule.security.common.UserVo;
 import com.kokio.entitymodule.domain.user.entity.User;
-import com.kokio.entitymodule.domain.user.model.Sign;
+import com.kokio.entitymodule.domain.user.model.Sign.In;
+import com.kokio.userapi.model.security.Token;
 import com.kokio.userapi.service.author.AuthorSignInService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,14 +28,17 @@ public class SignInApplication {
   private final PasswordEncoder passwordEncoder;
 
 
-  public String userTokenLogin(Sign.In form) {
+  public Token userTokenLogin(In form) {
     User user = authorSignInService.validUserFind(form.getEmail()).orElseThrow(
         () -> new UserException(USER_NOT_FOUND)
     );
     if (!passwordEncoder.matches(form.getPassword(), user.getPassword())) {
       throw new UserException(PASSWORD_NOT_MATCHED);
     }
-    return provider.createToken(user.getEmail(), user.getId(), user.getRoles());
+    Token tokens = new Token(provider.createToken(user.getEmail(), user.getId(), user.getRoles()),
+        provider.createRefreshToken(user.getEmail(), user.getId(), user.getRoles()));
+
+    return tokens;
 
   }
 

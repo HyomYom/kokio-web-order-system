@@ -1,10 +1,11 @@
 package com.kokio.commonmodule.utill;
 
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.Base64;
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,19 +14,21 @@ import org.springframework.stereotype.Component;
 public class SecureAes256Util {
 
 
-  private static final byte[] IV = new byte[16];
   private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
-  private static final String KEY_ALGORITHM = "AES";
-  private static final IvParameterSpec IV_PARAMETER_SPEC = new IvParameterSpec(IV);
 
-  public static String encrypt(String secretKey, String text) {
+  public static String encrypt(SecretKey secretKeySpec, String text) {
     try {
       Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-      SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), KEY_ALGORITHM);
+      SecureRandom secureRandom = new SecureRandom();
 
-      cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, IV_PARAMETER_SPEC);
+      //AES 암호화에서는 IV의 크기가 128비트, 즉 16바이트여야 함
+      byte[] iv = new byte[16];
+      secureRandom.nextBytes(iv);
+      IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+
+      cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
       byte[] encrypted = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
-      return Base64.getEncoder().encodeToString(IV_PARAMETER_SPEC.getIV()) + ":"
+      return Base64.getEncoder().encodeToString(ivParameterSpec.getIV()) + ":"
           + Base64.getEncoder().encodeToString(encrypted);
 
     } catch (Exception e) {
@@ -33,16 +36,15 @@ public class SecureAes256Util {
     }
   }
 
-  public static String decrypt(String secretKey, String encryptedText) {
+  public static String decrypt(SecretKey secretKeySpec, String encryptedText) {
     try {
       String[] parts = encryptedText.split(":");
       byte[] ivBytes = Base64.getDecoder().decode(parts[0]);
       byte[] encryptedBytes = Base64.getDecoder().decode(parts[1]);
 
-      SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), KEY_ALGORITHM);
       Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-
-      cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, IV_PARAMETER_SPEC);
+      IvParameterSpec ivParameterSpec = new IvParameterSpec(ivBytes);
+      cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
       byte[] decrypted = cipher.doFinal(encryptedBytes);
       return new String(decrypted, StandardCharsets.UTF_8);
 

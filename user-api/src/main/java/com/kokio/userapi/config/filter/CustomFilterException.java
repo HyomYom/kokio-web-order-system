@@ -28,6 +28,7 @@ public class CustomFilterException extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
     ObjectMapper objectMapper = new ObjectMapper();
     try {
+      System.out.println("custom");
       filterChain.doFilter(request, response);
     } catch (UserException e) {
       response.setStatus(e.getStatus());

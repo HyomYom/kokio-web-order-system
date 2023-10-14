@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class ProductSecurityConfig extends GlobalSecurityConfig {
 
+
+
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final CustomFilterException customFilterException;
 

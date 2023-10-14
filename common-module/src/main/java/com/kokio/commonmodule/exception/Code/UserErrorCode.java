@@ -23,9 +23,11 @@ public enum UserErrorCode {
 
   //token
   JWT_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "토큰이 더이상 유요하지 않습니다."),
+  JWT_REFRESH_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "재발급 토큰이 더이상 유요하지 않습니다."),
   JWT_ACCESS_DENIED(HttpStatus.BAD_REQUEST, "접근 권한이 제한됩니다.");
 
 
   private final HttpStatus httpStatus;
   private final String detail;
+
 }

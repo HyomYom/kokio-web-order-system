@@ -20,5 +20,12 @@ public class UserException extends RuntimeException {
     this.status = userErrorCode.getHttpStatus().value();
   }
 
+  public UserException(UserErrorCode userErrorCode, String error) {
+    super(error);
+    this.userErrorCode = userErrorCode;
+    this.status = userErrorCode.getHttpStatus().value();
+
+  }
+
 
 }

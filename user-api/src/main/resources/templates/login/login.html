@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Example</title>
+</head>
+<body>
+
+<button onclick="login()">Login</button>
+
+<script>
+  function login() {
+    fetch('http://localhost:8081/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: 'pagooo@naver.com',
+        password: 'string'
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        const accessToken = getCookieValueByName('accessToken');
+        const refreshToken = getCookieValueByName('refreshToken');
+
+        console.log('Access Token:', accessToken);
+        console.log('Refresh Token:', refreshToken);
+
+        // 다음 요청 처리 또는 원하는 동작 수행
+      } else {
+        console.error('Login failed.' );
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+  function getCookieValueByName(name) {
+    const cookies = document.cookie.split('; ');
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].split('=');
+      if (cookie[0] === name) return cookie[1];
+    }
+
+    return '';
+  }
+</script>
+
+</body>
+</html>

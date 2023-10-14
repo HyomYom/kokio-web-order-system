@@ -48,19 +48,37 @@ subprojects {
         // sql
         runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
+        // mongo
+        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
         // H2
         testImplementation 'com.h2database:h2:1.4.200'
 
         //jwt
         implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
+        //json
+        implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
         //RandomStringUtils
         implementation 'org.apache.commons:commons-lang3:3.12.0' //
 
+        //websocket
+        implementation 'org.springframework.boot:spring-boot-starter-websocket'
+        implementation 'org.webjars:sockjs-client:1.1.2'
+        implementation 'org.webjars:stomp-websocket:2.3.3-1'
 
-//swagger
-        implementation 'io.springfox:springfox-boot-starter:3.0.0'
+        //view
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+        implementation 'org.springframework.boot:spring-boot-devtools'
+        implementation 'org.webjars.bower:bootstrap:4.3.1'
+        implementation 'org.webjars.bower:vue:2.5.16'
+        implementation 'com.google.code.gson:gson:2.8.0'
+        implementation 'org.webjars.bower:axios:0.17.1'
 
+
+        //swagger
+        implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
         //redis
 
         implementation 'org.springframework.boot:spring-boot-starter-data-redis'

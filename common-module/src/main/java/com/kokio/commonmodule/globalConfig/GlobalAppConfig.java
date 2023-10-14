@@ -8,8 +8,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-public class GlobalAppConfig {
+public class GlobalAppConfig implements WebMvcConfigurer {
+
   @PersistenceContext
   private EntityManager em;
 
@@ -32,5 +34,6 @@ public class GlobalAppConfig {
   public TokenProvider tokenProvider() {
     return new TokenProvider();
   }
+
 
 }

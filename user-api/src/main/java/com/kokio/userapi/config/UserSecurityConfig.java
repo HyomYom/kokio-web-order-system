@@ -17,6 +17,7 @@ public class UserSecurityConfig extends GlobalSecurityConfig {
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final CustomFilterException customFilterException;
 
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
